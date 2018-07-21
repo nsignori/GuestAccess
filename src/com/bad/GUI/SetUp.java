@@ -11,7 +11,7 @@ public class SetUp extends Application {
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
         stage.setOnCloseRequest(e -> Main.exit());
-        setScene(new HomeGUI());
+        setScene(new LoginGUI());
         stage.show();
     }
 
