@@ -7,7 +7,7 @@ public class HomeGUI extends GUI {
 	private Label lblTitle = new Label("Weight Tracker");
 
 	public HomeGUI() {
-		super("Tracker");
+		super("Home");
 		lblTitle.setFont(new Font("Times New Roman", 24));
 	}
 }
