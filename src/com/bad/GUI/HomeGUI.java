@@ -7,8 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.GridPane;
 
 public class HomeGUI extends GUI {
@@ -17,6 +19,16 @@ public class HomeGUI extends GUI {
 		super("Home");
 		TableView<AccessRule> tvAccessRules = new TableView<AccessRule>();
 		Button btnAddRule = new Button("Add Access Rule");
+
+		tvAccessRules.setRowFactory(tv -> {
+			TableRow<AccessRule> row = new TableRow<AccessRule>();
+			row.setOnMouseClicked(event -> {
+				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
+					Main.setScene("editRule " + row.getItem().getId());
+				}
+			});
+			return row ;
+		});
 
 		TableColumn<AccessRule, Integer> tcId = new TableColumn<AccessRule, Integer>("Id");
 		TableColumn<AccessRule, String> tcGuest = new TableColumn<AccessRule, String>("Guest");
@@ -34,7 +46,7 @@ public class HomeGUI extends GUI {
 		gpRoot.add(tvAccessRules, 0, 0);
 		gpRoot.add(btnAddRule, 0, 1);
 		GridPane.setHalignment(btnAddRule, HPos.CENTER);
-		
+
 		btnAddRule.setOnMouseClicked(e -> Main.setScene("addRule"));
 	}
 }

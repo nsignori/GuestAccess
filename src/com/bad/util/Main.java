@@ -24,7 +24,14 @@ public class Main {
 		Application.launch(SetUp.class);
 	}
 
-	public static void setScene(String scene) {
+	public static void setScene(String input) {
+		String scene = "", supplement = "";
+		if(input.contains(" ")) {
+			scene = input.substring(0, input.indexOf(" "));
+			supplement = input.substring(input.indexOf(" ") + 1);
+		} else {
+			scene = input;
+		}
 		switch (scene) {
 		case "login":
 			SetUp.setScene(new LoginGUI());
@@ -35,8 +42,11 @@ public class Main {
 		case "addRule":
 			SetUp.setScene(new AddRuleGUI());
 			break;
+		case "editRule":
+			SetUp.setScene(new EditRuleGUI(getAccessRule(Integer.parseInt(supplement))));
+			break;
 		default:
-			System.out.println("Case \"" + scene + "\" not known.");
+			System.out.println("Case \"" + input + "\" not known.");
 		}
 	}
 
@@ -76,6 +86,10 @@ public class Main {
 		return myHash;
 	}
 
+	public static AccessRule getAccessRule(int id) {
+		return db.getAccessRules(id);
+	}
+	
 	public static ArrayList<AccessRule> getAccessRulesForUser() {
 		return db.getAccessRulesForUser(username);
 	}
@@ -90,5 +104,9 @@ public class Main {
 
 	public static AccessRule addRule(AccessRule rule) {
 		return db.addRule(rule);
+	}
+
+	public static AccessRule editRule(AccessRule rule) {
+		return db.editRule(rule);
 	}
 }

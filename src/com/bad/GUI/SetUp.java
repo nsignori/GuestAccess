@@ -16,7 +16,7 @@ public class SetUp extends Application {
         stage.setWidth(Main.getWidth());
         stage.setHeight(Main.getHeight());
         stage.centerOnScreen();
-//        stage.setResizable(false);
+        stage.setResizable(false);
         stage.getIcons().add(new Image("file:res/myPlaceIcon.PNG"));
         setScene(new LoginGUI());
         stage.show();
