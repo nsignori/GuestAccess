@@ -72,13 +72,8 @@ public class EditRuleGUI extends GUI {
 				final AccessRule commit = Main.editRule(rule);
 
 				if(commit != null) {
-					new Thread(new Runnable() {
-								@Override
-								public void run() {
-									System.out.println("starting mailer");
-									EmailSend.sendMail(commit.getGuestNumber() + "@mms.att.net", "ACCESS RULE CHANGED. UPDATE FOLLOWS.\n\nHello " + commit.getGuest() + ". You have been given access to " + commit.getHomeOwner() + "'s house from " + commit.getStartTime() + " to " + commit.getEndTime() + ". Use " + commit.getPin() + " to disable the alarm.");
-									System.out.println("end mailer");
-								}});
+					EmailSend.sendMail(commit.getGuestNumber() + "@mms.att.net", "ACCESS RULE CHANGED. UPDATE FOLLOWS.\n\nHello " + commit.getGuest() + ". You have been given access to " + commit.getHomeOwner() + "'s house from " + commit.getStartTime() + " to " + commit.getEndTime() + ". Use " + commit.getPin() + " to disable the alarm.");
+
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Rule Edited");
 					alert.setHeaderText("Access Rule Edited");

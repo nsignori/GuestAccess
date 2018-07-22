@@ -66,11 +66,8 @@ public class AddRuleGUI extends GUI {
 				final AccessRule commit = Main.addRule(rule);
 
 				if(commit != null) {
-					new Thread(new Runnable() {
-								@Override
-								public void run() {
-									EmailSend.sendMail(commit.getGuestNumber() + "@mms.att.net", "Hello " + commit.getGuest() + ". You have been given access to " + commit.getHomeOwner() + "'s house from " + commit.getStartTime() + " to " + commit.getEndTime() + ". Use " + commit.getPin() + " to disable the alarm.");
-								}});
+					EmailSend.sendMail(commit.getGuestNumber() + "@mms.att.net", "Hello " + commit.getGuest() + ". You have been given access to " + commit.getHomeOwner() + "'s house from " + commit.getStartTime() + " to " + commit.getEndTime() + ". Use " + commit.getPin() + " to disable the alarm.");
+					
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Rule Added");
 					alert.setHeaderText("Access Rule Added");
