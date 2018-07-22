@@ -1,22 +1,25 @@
 package com.bad.GUI;
 
 public class AccessRule {
-	private int id, pin;
-	private String homeOwner, guest, startTime, endTime;
+	private int id;
+	private String homeOwner, guest, guestNumber, pin, startTime, endTime;
 	
-	public AccessRule(int id, String homeOwner, String guest, int pin, String startTime, String endTime) {
+	public AccessRule(int id, String homeOwner, String guest, String guestNumber, String pin, String startTime, String endTime) {
 		this.id = id;
 		this.homeOwner = homeOwner;
 		this.guest = guest;
+		this.guestNumber = guestNumber;
 		this.pin = pin;
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
 	
-	public AccessRule(String homeOwner, String guest, String startTime, String endTime) {
+	public AccessRule(String homeOwner, String guest, String guestNumber, String startTime, String endTime) {
 		this.homeOwner = homeOwner;
 		this.guest = guest;
-		this.pin = (int) (Math.random() * 9999);
+		this.guestNumber = guestNumber;
+		this.pin = "" + (int) (Math.random() * 9999);
+		this.pin = "0000".substring(this.pin.length()) + this.pin;
 		this.startTime = startTime;
 		this.endTime = endTime;
 	}
@@ -32,9 +35,13 @@ public class AccessRule {
 	public String getGuest() {
 		return guest;
 	}
+	
+	public String getGuestNumber() {
+		return guestNumber;
+	}
 
 	public String getPin() {
-		return "0000".substring(("" + pin).length()) + pin;
+		return pin;
 	}
 
 	public String getStartTime() {

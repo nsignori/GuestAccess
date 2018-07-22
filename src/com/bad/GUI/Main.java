@@ -11,46 +11,53 @@ import com.bad.storage.DBConnectionManager;
 import javafx.application.Application;
 
 public class Main {
-    private static DBConnectionManager db = DBConnectionManager.getInstance();
-    private static String username = "";
-    
-    private static int width = 350;
-    private static int height = 500;
+	private static DBConnectionManager db = DBConnectionManager.getInstance();
+	private static String username = "";
 
-    public static void main(String[] args) {
-        Application.launch(SetUp.class);
-    }
+	private static int width = 350;
+	private static int height = 500;
 
-    public static void setScene(String scene) {
-        switch (scene) {
-        case "login":
-            SetUp.setScene(new LoginGUI());
-            break;
-            case "home":
-                SetUp.setScene(new HomeGUI());
-                break;
-            default:
-                System.out.println("Case \"" + scene + "\" not known.");
-        }
-    }
+	public static void main(String[] args) {
+		Application.launch(SetUp.class);
+	}
 
-    public static void exit() {
-        db.close();
-    }
-    
-    public static boolean login(String username, String password) {
-    	boolean correct = false;
-    	String[] userInfo = db.getUserInfo(username);
-    	
-    	if(userInfo != null) {
-    		correct = userInfo[0].equals(hash(password + userInfo[1]));
-    		if(correct) {
-    			Main.username = username;
-    		}
-    	}
-    	
-    	return correct;
-    }
+	public static void setScene(String scene) {
+		switch (scene) {
+		case "login":
+			SetUp.setScene(new LoginGUI());
+			break;
+		case "home":
+			SetUp.setScene(new HomeGUI());
+			break;
+		case "addRule":
+			SetUp.setScene(new AddRuleGUI());
+			break;
+		default:
+			System.out.println("Case \"" + scene + "\" not known.");
+		}
+	}
+
+	public static void exit() {
+		db.close();
+	}
+	
+	public static String getUsername() {
+		return username;
+	}
+
+	public static boolean login(String username, String password) {
+		boolean correct = false;
+		String[] userInfo = db.getUserInfo(username);
+
+		if(userInfo != null) {
+			correct = userInfo[0].equals(hash(password + userInfo[1]));
+			if(correct) {
+				Main.username = username;
+			}
+		}
+
+		return correct;
+	}
 
 	private static String hash(String input) {
 		String myHash = null;
@@ -59,9 +66,8 @@ public class Main {
 			md.update(input.getBytes());
 			byte[] digest = md.digest();
 			myHash = DatatypeConverter.printHexBinary(digest);
-	
+
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return myHash;
@@ -72,10 +78,14 @@ public class Main {
 	}
 
 	public static int getWidth() {
-	    return width;
+		return width;
 	}
 
 	public static int getHeight() {
-	    return height;
+		return height;
+	}
+
+	public static AccessRule addRule(AccessRule rule) {
+		return db.addRule(rule);
 	}
 }

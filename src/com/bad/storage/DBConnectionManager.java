@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.bad.GUI.AccessRule;
+import com.mysql.jdbc.Statement;
 
 
 public class DBConnectionManager {
@@ -20,7 +21,7 @@ public class DBConnectionManager {
 	private static final String dbPassword = "Fu5o32ta8A75xaN1T32I162E1I2iC8";
 	private Connection conn;
 
-	private PreparedStatement psUserInfo, psAccessRulesUser;
+	private PreparedStatement psUserInfo, psAccessRulesUser, psAccessRule, psMakeRule;
 
 	private DBConnectionManager() throws ClassNotFoundException, SQLException {
 		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -54,6 +55,8 @@ public class DBConnectionManager {
 		try {
 			psUserInfo = conn.prepareStatement("SELECT * FROM users WHERE username = ?;");
 			psAccessRulesUser = conn.prepareStatement("SELECT * FROM accessRules WHERE homeOwner = ?;");
+			psAccessRule = conn.prepareStatement("SELECT * FROM accessRules WHERE id = ?;");
+			psMakeRule = conn.prepareStatement("INSERT INTO accessRules (homeOwner, guest, guestNumber, pin, startTime, endTime) VALUES (?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -103,11 +106,40 @@ public class DBConnectionManager {
 
 			ResultSet rs = psAccessRulesUser.executeQuery();
 			if(rs.next()) {
-				rules.add(new AccessRule(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6)));
+				rules.add(new AccessRule(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return rules;
+	}
+
+	public AccessRule addRule(AccessRule rule) {
+		AccessRule ret = null;
+		try {
+			psMakeRule.setString(1, rule.getHomeOwner());
+			psMakeRule.setString(2, rule.getGuest());
+			psMakeRule.setString(3, rule.getGuestNumber());
+			psMakeRule.setString(4, rule.getPin());
+			psMakeRule.setString(5, rule.getStartTime());
+			psMakeRule.setString(6, rule.getEndTime());
+
+			psMakeRule.execute();
+			ResultSet rs = psMakeRule.getGeneratedKeys();
+			if(rs.next()) {
+				int id = rs.getInt(1);
+
+				psAccessRule.setInt(1, id);
+
+				ResultSet rs2 = psAccessRule.executeQuery();
+
+				if(rs2.next()) {
+					ret = new AccessRule(rs2.getInt(1), rs2.getString(2), rs2.getString(3), rs2.getString(4), rs2.getString(5), rs2.getString(6), rs2.getString(7));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ret;
 	}
 }

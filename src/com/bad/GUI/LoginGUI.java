@@ -1,7 +1,6 @@
 package com.bad.GUI;
 
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -11,12 +10,12 @@ public class LoginGUI extends GUI {
 	
 	public LoginGUI() {
 		super("Login");
-		
 		Button btnLogin = new Button("Login");
 		
-		gpRoot.add(new Label("Username: "), 0, 0);
+		txtUsername.setPromptText("Username");
+		pfPass.setPromptText("Password");
+		
 		gpRoot.add(txtUsername, 1, 0);
-		gpRoot.add(new Label("Password: "), 0, 1);
 		gpRoot.add(pfPass, 1, 1);
 		gpRoot.add(btnLogin, 0, 2, 2, 1);
 		
@@ -24,13 +23,10 @@ public class LoginGUI extends GUI {
 	}
 	
 	private void login() {
-//		if(Main.login(txtUsername.getText().toLowerCase(), pfPass.getText())) { FIXME
-//			Main.setScene("home");
-//		} else {
-//			lblError.setText("Incorrect username or password.");
-//		}
-		
-
-		Main.setScene("home"); // Bypass password check
+		if(Main.login(txtUsername.getText().toLowerCase(), pfPass.getText())) {
+			Main.setScene("home");
+		} else {
+			lblError.setText("Incorrect username or password.");
+		}
 	}
 }
