@@ -1,6 +1,7 @@
 package com.bad.GUI;
 
 import javafx.application.Application;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -9,19 +10,21 @@ public class SetUp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        stage = primaryStage;
+    	stage = primaryStage;
         stage.setOnCloseRequest(e -> Main.exit());
+        stage.setWidth(Main.getWidth());
+        stage.setHeight(Main.getHeight());
+        stage.centerOnScreen();
+        stage.setResizable(false);
+        stage.getIcons().add(new Image("file:res/myPlaceIcon.PNG"));
         setScene(new LoginGUI());
         stage.show();
     }
 
     public static void setScene(GUI scene) {
-        double width = Screen.getPrimary().getVisualBounds().getWidth(), height = Screen.getPrimary().getVisualBounds().getHeight();
+        stage.close();
         stage.setTitle(scene.getTitle());
         stage.setScene(scene.getScene());
-        stage.setWidth(scene.getWidth());
-        stage.setHeight(scene.getHeight());
-        stage.setX((width - scene.getWidth()) / 2);
-        stage.setY((height - scene.getHeight()) / 2);
+        stage.show();
     }
 }

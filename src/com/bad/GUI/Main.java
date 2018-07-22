@@ -2,6 +2,7 @@ package com.bad.GUI;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import javax.xml.bind.DatatypeConverter;
 
@@ -11,6 +12,10 @@ import javafx.application.Application;
 
 public class Main {
     private static DBConnectionManager db = DBConnectionManager.getInstance();
+    private static String username = "";
+    
+    private static int width = 350;
+    private static int height = 500;
 
     public static void main(String[] args) {
         Application.launch(SetUp.class);
@@ -39,6 +44,9 @@ public class Main {
     	
     	if(userInfo != null) {
     		correct = userInfo[0].equals(hash(password + userInfo[1]));
+    		if(correct) {
+    			Main.username = username;
+    		}
     	}
     	
     	return correct;
@@ -57,5 +65,17 @@ public class Main {
 			e.printStackTrace();
 		}
 		return myHash;
+	}
+
+	public static ArrayList<AccessRule> getAccessRulesForUser() {
+		return db.getAccessRulesForUser(username);
+	}
+
+	public static int getWidth() {
+	    return width;
+	}
+
+	public static int getHeight() {
+	    return height;
 	}
 }

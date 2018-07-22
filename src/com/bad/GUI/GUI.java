@@ -15,8 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class GUI {
-    private int width = 350;
-    private int height = 500;
     private String title = "";
 
     protected GridPane gpRoot = new GridPane();
@@ -28,6 +26,8 @@ public class GUI {
         gpRoot.setAlignment(Pos.CENTER);
         gpRoot.setHgap(5);
         gpRoot.setVgap(20);
+        
+        lblError.setTextFill(Color.RED);
     }
 
     public Scene getScene() {
@@ -36,11 +36,10 @@ public class GUI {
     	vb.setAlignment(Pos.TOP_CENTER);
     	try {
     		ImageView im = new ImageView(new Image(new FileInputStream("C:\\Users\\Nick\\Documents\\Workspace\\GuestAccess\\res\\myPlaceLogo.PNG")));
-			im.setFitWidth(this.getWidth() * .5);
+			im.setFitWidth(Main.getWidth() * .5);
 			im.setPreserveRatio(true);
-    		vb.getChildren().addAll(im, gpRoot);
+    		vb.getChildren().addAll(im, gpRoot, lblError);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         return new Scene(vb);
@@ -48,13 +47,5 @@ public class GUI {
 
     public String getTitle() {
         return title;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
     }
 }

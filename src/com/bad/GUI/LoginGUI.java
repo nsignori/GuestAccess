@@ -24,10 +24,13 @@ public class LoginGUI extends GUI {
 	}
 	
 	private void login() {
-		if(Main.login(txtUsername.getText(), pfPass.getText())) {
-			Main.setScene("home");
-		} else {
-			lblError.setText("Incorrect username or password.");
-		}
+//		if(Main.login(txtUsername.getText().toLowerCase(), pfPass.getText())) { FIXME
+//			Main.setScene("home");
+//		} else {
+//			lblError.setText("Incorrect username or password.");
+//		}
+		
+
+		Main.setScene("home"); // Bypass password check
 	}
 }

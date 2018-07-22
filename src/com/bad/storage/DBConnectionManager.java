@@ -5,6 +5,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.bad.GUI.AccessRule;
 
 
 public class DBConnectionManager {
@@ -17,7 +20,7 @@ public class DBConnectionManager {
 	private static final String dbPassword = "Fu5o32ta8A75xaN1T32I162E1I2iC8";
 	private Connection conn;
 
-	private PreparedStatement psUserInfo;
+	private PreparedStatement psUserInfo, psAccessRulesUser;
 
 	private DBConnectionManager() throws ClassNotFoundException, SQLException {
 		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -50,6 +53,7 @@ public class DBConnectionManager {
 	private void makePS() {
 		try {
 			psUserInfo = conn.prepareStatement("SELECT * FROM users WHERE username = ?;");
+			psAccessRulesUser = conn.prepareStatement("SELECT * FROM accessRules WHERE homeOwner = ?;");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -90,5 +94,20 @@ public class DBConnectionManager {
 			e.printStackTrace();
 		}
 		return info;
+	}
+
+	public ArrayList<AccessRule> getAccessRulesForUser(String username) {
+		ArrayList<AccessRule> rules = new ArrayList<AccessRule>();
+		try {
+			psAccessRulesUser.setString(1, username);
+
+			ResultSet rs = psAccessRulesUser.executeQuery();
+			if(rs.next()) {
+				rules.add(new AccessRule(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getInt(4), rs.getString(5), rs.getString(6)));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rules;
 	}
 }
