@@ -1,4 +1,4 @@
-package com.bad.GUI;
+package com.bad.util;
 
 public class AccessRule {
 	private int id;

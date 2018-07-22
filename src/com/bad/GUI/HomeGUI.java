@@ -1,5 +1,8 @@
 package com.bad.GUI;
 
+import com.bad.util.AccessRule;
+import com.bad.util.Main;
+
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;

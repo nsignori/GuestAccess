@@ -1,4 +1,4 @@
-package com.bad.storage;
+package com.bad.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.bad.GUI.AccessRule;
 import com.mysql.jdbc.Statement;
 
 

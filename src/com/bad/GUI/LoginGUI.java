@@ -1,5 +1,7 @@
 package com.bad.GUI;
 
+import com.bad.util.Main;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;

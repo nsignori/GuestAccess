@@ -1,5 +1,7 @@
 package com.bad.GUI;
 
+import com.bad.util.Main;
+
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;

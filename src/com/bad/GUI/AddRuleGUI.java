@@ -1,5 +1,9 @@
 package com.bad.GUI;
 
+import com.bad.util.AccessRule;
+import com.bad.util.EmailSend;
+import com.bad.util.Main;
+
 import javafx.geometry.Orientation;
 import javafx.geometry.VPos;
 import javafx.scene.control.Alert;
@@ -65,8 +69,12 @@ public class AddRuleGUI extends GUI {
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Rule Added");
 					alert.setHeaderText("Access Rule Added");
-					alert.setContentText("ID: " + rule.getId() + "\nGuest: " + rule.getGuest() + "\nGuest Number: " + rule.getGuestNumber() + "\nPin: " + rule.getPin() + "\nStart: " + rule.getStartTime() + "\nStop: " + rule.getEndTime());
+					alert.setContentText("A test message has been sent to the guest.\nID: " + rule.getId() + "\nGuest: " + rule.getGuest() + "\nGuest Number: " + rule.getGuestNumber() + "\nPin: " + rule.getPin() + "\nStart: " + rule.getStartTime() + "\nStop: " + rule.getEndTime());
 					alert.showAndWait();
+					
+					EmailSend.sendMail(rule.getGuestNumber() + "@mms.att.net", "Hello " + rule.getGuest() + ". You have been given access to " + rule.getHomeOwner() + "'s house from " + rule.getStartTime() + " to " + rule.getEndTime() + ". Use " + rule.getPin() + " to disable the alarm.");
+					
+					Main.setScene("home");
 				} else {
 					lblError.setText("Error adding access rule.");
 				}

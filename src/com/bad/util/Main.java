@@ -1,4 +1,4 @@
-package com.bad.GUI;
+package com.bad.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -6,7 +6,10 @@ import java.util.ArrayList;
 
 import javax.xml.bind.DatatypeConverter;
 
-import com.bad.storage.DBConnectionManager;
+import com.bad.GUI.AddRuleGUI;
+import com.bad.GUI.HomeGUI;
+import com.bad.GUI.LoginGUI;
+import com.bad.GUI.SetUp;
 
 import javafx.application.Application;
 

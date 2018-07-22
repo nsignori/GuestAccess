@@ -1,4 +1,4 @@
-package com.bad.GUI;
+package com.bad.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

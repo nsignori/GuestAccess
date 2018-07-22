@@ -3,6 +3,8 @@ package com.bad.GUI;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import com.bad.util.Main;
+
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;

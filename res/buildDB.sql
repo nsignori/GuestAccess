@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `accessrules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `homeowner` varchar(15) NOT NULL,
   `guest` varchar(30) NOT NULL,
-  `guestnumber` int(11) NOT NULL,
+  `guestnumber` char(10) NOT NULL,
   `pin` char(4) NOT NULL,
   `starttime` char(16) NOT NULL,
   `endtime` char(16) NOT NULL,
