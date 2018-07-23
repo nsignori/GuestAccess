@@ -1,8 +1,10 @@
-package com.bad.util;
+package com.bad.GUI;
 
 import java.time.LocalDate;
 
-import com.bad.GUI.GUI;
+import com.bad.util.AccessRule;
+import com.bad.util.EmailSend;
+import com.bad.util.GuestAccessMain;
 
 import javafx.geometry.Orientation;
 import javafx.geometry.VPos;
@@ -58,7 +60,7 @@ public class EditRuleGUI extends GUI {
 		gpRoot.add(txtStartTime, 0, 3);
 		gpRoot.add(txtStopTime, 2, 3);
 		gpRoot.add(btnEdit, 0, 4);
-		gpRoot.add(btnDelete, 3, 4);
+		gpRoot.add(btnDelete, 2, 4);
 
 		btnEdit.setOnMouseClicked(e -> editRule(rule));
 		btnDelete.setOnMouseClicked(e -> deleteRule(rule));

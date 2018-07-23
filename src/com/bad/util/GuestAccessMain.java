@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import javax.xml.bind.DatatypeConverter;
 
 import com.bad.GUI.AddRuleGUI;
+import com.bad.GUI.EditRuleGUI;
 import com.bad.GUI.HomeGUI;
 import com.bad.GUI.LoginGUI;
 
