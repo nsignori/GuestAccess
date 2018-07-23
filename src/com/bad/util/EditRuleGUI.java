@@ -24,7 +24,8 @@ public class EditRuleGUI extends GUI {
 
 	public EditRuleGUI(AccessRule rule) {
 		super("Edit Access Rule");
-		Button btnAdd = new Button("Change Rule");
+		Button btnEdit = new Button("Change Rule");
+		Button btnDelete = new Button("Delete Rule");
 
 		Separator sepVert = new Separator();
 		sepVert.setOrientation(Orientation.VERTICAL);
@@ -56,9 +57,24 @@ public class EditRuleGUI extends GUI {
 		gpRoot.add(dpStopDate, 2, 2);
 		gpRoot.add(txtStartTime, 0, 3);
 		gpRoot.add(txtStopTime, 2, 3);
-		gpRoot.add(btnAdd, 0, 4, 3, 1);
+		gpRoot.add(btnEdit, 0, 4);
+		gpRoot.add(btnDelete, 3, 4);
 
-		btnAdd.setOnMouseClicked(e -> editRule(rule));
+		btnEdit.setOnMouseClicked(e -> editRule(rule));
+		btnDelete.setOnMouseClicked(e -> deleteRule(rule));
+	}
+
+	private void deleteRule(AccessRule rule) {
+		GuestAccessMain.deleteRule(rule);
+		EmailSend.sendMail(rule.getGuestNumber() + "@mms.att.net", "ACCESS RULE DELETED. THE FOLLOWING RULE WAS CANCELLED.\n\nHello " + rule.getGuest() + ". You have been given access to " + rule.getHomeOwner() + "'s house from " + rule.getStartTime() + " to " + rule.getEndTime() + ". Use " + rule.getPin() + " to disable the alarm.");
+
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Rule Deleted");
+		alert.setHeaderText("Access Rule Deleted");
+		alert.setContentText("A text message has been sent to the guest.\nID: " + rule.getId() + "\nGuest: " + rule.getGuest() + "\nGuest Number: " + rule.getGuestNumber() + "\nPin: " + rule.getPin() + "\nStart: " + rule.getStartTime() + "\nStop: " + rule.getEndTime());
+		alert.showAndWait();
+
+		GuestAccessMain.setScene("home");
 	}
 
 	private void editRule(AccessRule org) {
@@ -68,8 +84,8 @@ public class EditRuleGUI extends GUI {
 			String start =  dpStartDate.getValue().toString() + " " + (txtStartTime.getText().length() < 5 ? "0" + txtStartTime.getText() : txtStartTime.getText());
 			String end =  dpStopDate.getValue().toString() + " " + (txtStopTime.getText().length() < 5 ? "0" + txtStopTime.getText() : txtStopTime.getText());
 			try {
-				AccessRule rule = new AccessRule(org.getId(), Main.getUsername(), txtGuestName.getText(), "" + Long.parseLong(txtGuestNumber.getText()), org.getPin(), start, end);
-				final AccessRule commit = Main.editRule(rule);
+				AccessRule rule = new AccessRule(org.getId(), GuestAccessMain.getUsername(), txtGuestName.getText(), "" + Long.parseLong(txtGuestNumber.getText()), org.getPin(), start, end);
+				final AccessRule commit = GuestAccessMain.editRule(rule);
 
 				if(commit != null) {
 					EmailSend.sendMail(commit.getGuestNumber() + "@mms.att.net", "ACCESS RULE CHANGED. UPDATE FOLLOWS.\n\nHello " + commit.getGuest() + ". You have been given access to " + commit.getHomeOwner() + "'s house from " + commit.getStartTime() + " to " + commit.getEndTime() + ". Use " + commit.getPin() + " to disable the alarm.");
@@ -80,7 +96,7 @@ public class EditRuleGUI extends GUI {
 					alert.setContentText("A text message has been sent to the guest.\nID: " + commit.getId() + "\nGuest: " + commit.getGuest() + "\nGuest Number: " + commit.getGuestNumber() + "\nPin: " + commit.getPin() + "\nStart: " + commit.getStartTime() + "\nStop: " + commit.getEndTime());
 					alert.showAndWait();
 
-					Main.setScene("home");
+					GuestAccessMain.setScene("home");
 				} else {
 					lblError.setText("Error editing access rule.");
 				}

@@ -1,6 +1,7 @@
-package com.bad.GUI;
+package com.bad.util;
 
-import com.bad.util.Main;
+import com.bad.GUI.GUI;
+import com.bad.GUI.LoginGUI;
 
 import javafx.application.Application;
 import javafx.scene.image.Image;
@@ -12,9 +13,9 @@ public class SetUp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
     	stage = primaryStage;
-        stage.setOnCloseRequest(e -> Main.exit());
-        stage.setWidth(Main.getWidth());
-        stage.setHeight(Main.getHeight());
+        stage.setOnCloseRequest(e -> GuestAccessMain.exit());
+        stage.setWidth(GuestAccessMain.getWidth());
+        stage.setHeight(GuestAccessMain.getHeight());
         stage.centerOnScreen();
         stage.setResizable(false);
         stage.getIcons().add(new Image("file:res/myPlaceIcon.PNG"));

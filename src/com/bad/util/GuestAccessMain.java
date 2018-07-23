@@ -9,16 +9,15 @@ import javax.xml.bind.DatatypeConverter;
 import com.bad.GUI.AddRuleGUI;
 import com.bad.GUI.HomeGUI;
 import com.bad.GUI.LoginGUI;
-import com.bad.GUI.SetUp;
 
 import javafx.application.Application;
 
-public class Main {
+public class GuestAccessMain {
 	private static DBConnectionManager db = DBConnectionManager.getInstance();
 	private static String username = "";
 
-	private static int width = 350;
-	private static int height = 500;
+	private static int width = 500;
+	private static int height = 400;
 
 	public static void main(String[] args) {
 		Application.launch(SetUp.class);
@@ -53,7 +52,7 @@ public class Main {
 	public static void exit() {
 		db.close();
 	}
-	
+
 	public static String getUsername() {
 		return username;
 	}
@@ -65,7 +64,7 @@ public class Main {
 		if(userInfo != null) {
 			correct = userInfo[0].equals(hash(password + userInfo[1]));
 			if(correct) {
-				Main.username = username;
+				GuestAccessMain.username = username;
 			}
 		}
 
@@ -89,7 +88,7 @@ public class Main {
 	public static AccessRule getAccessRule(int id) {
 		return db.getAccessRules(id);
 	}
-	
+
 	public static ArrayList<AccessRule> getAccessRulesForUser() {
 		return db.getAccessRulesForUser(username);
 	}
@@ -108,5 +107,9 @@ public class Main {
 
 	public static AccessRule editRule(AccessRule rule) {
 		return db.editRule(rule);
+	}
+
+	public static void deleteRule(AccessRule rule) {
+		db.deleteRule(rule);
 	}
 }

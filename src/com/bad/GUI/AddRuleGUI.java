@@ -2,7 +2,7 @@ package com.bad.GUI;
 
 import com.bad.util.AccessRule;
 import com.bad.util.EmailSend;
-import com.bad.util.Main;
+import com.bad.util.GuestAccessMain;
 
 import javafx.geometry.Orientation;
 import javafx.geometry.VPos;
@@ -62,8 +62,8 @@ public class AddRuleGUI extends GUI {
 			String start =  dpStartDate.getValue().toString() + " " + (txtStartTime.getText().length() < 5 ? "0" + txtStartTime.getText() : txtStartTime.getText());
 			String end =  dpStopDate.getValue().toString() + " " + (txtStopTime.getText().length() < 5 ? "0" + txtStopTime.getText() : txtStopTime.getText());
 			try {
-				AccessRule rule = new AccessRule(Main.getUsername(), txtGuestName.getText(), "" + Long.parseLong(txtGuestNumber.getText()), start, end);
-				final AccessRule commit = Main.addRule(rule);
+				AccessRule rule = new AccessRule(GuestAccessMain.getUsername(), txtGuestName.getText(), "" + Long.parseLong(txtGuestNumber.getText()), start, end);
+				final AccessRule commit = GuestAccessMain.addRule(rule);
 
 				if(commit != null) {
 					EmailSend.sendMail(commit.getGuestNumber() + "@mms.att.net", "Hello " + commit.getGuest() + ". You have been given access to " + commit.getHomeOwner() + "'s house from " + commit.getStartTime() + " to " + commit.getEndTime() + ". Use " + commit.getPin() + " to disable the alarm.");
@@ -74,7 +74,7 @@ public class AddRuleGUI extends GUI {
 					alert.setContentText("A text message has been sent to the guest.\nID: " + commit.getId() + "\nGuest: " + commit.getGuest() + "\nGuest Number: " + commit.getGuestNumber() + "\nPin: " + commit.getPin() + "\nStart: " + commit.getStartTime() + "\nStop: " + commit.getEndTime());
 					alert.showAndWait();
 
-					Main.setScene("home");
+					GuestAccessMain.setScene("home");
 				} else {
 					lblError.setText("Error adding access rule.");
 				}

@@ -1,7 +1,7 @@
 package com.bad.GUI;
 
 import com.bad.util.AccessRule;
-import com.bad.util.Main;
+import com.bad.util.GuestAccessMain;
 
 import javafx.collections.FXCollections;
 import javafx.geometry.HPos;
@@ -24,7 +24,7 @@ public class HomeGUI extends GUI {
 			TableRow<AccessRule> row = new TableRow<AccessRule>();
 			row.setOnMouseClicked(event -> {
 				if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY) {
-					Main.setScene("editRule " + row.getItem().getId());
+					GuestAccessMain.setScene("editRule " + row.getItem().getId());
 				}
 			});
 			return row ;
@@ -41,12 +41,12 @@ public class HomeGUI extends GUI {
 		tcStartTime.setCellValueFactory(new PropertyValueFactory<AccessRule, String>("startTime"));
 		tcEndTime.setCellValueFactory(new PropertyValueFactory<AccessRule, String>("endTime"));
 
-		tvAccessRules.setItems(FXCollections.observableArrayList(Main.getAccessRulesForUser()));
+		tvAccessRules.setItems(FXCollections.observableArrayList(GuestAccessMain.getAccessRulesForUser()));
 
 		gpRoot.add(tvAccessRules, 0, 0);
 		gpRoot.add(btnAddRule, 0, 1);
 		GridPane.setHalignment(btnAddRule, HPos.CENTER);
 
-		btnAddRule.setOnMouseClicked(e -> Main.setScene("addRule"));
+		btnAddRule.setOnMouseClicked(e -> GuestAccessMain.setScene("addRule"));
 	}
 }

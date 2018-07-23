@@ -1,6 +1,6 @@
 package com.bad.GUI;
 
-import com.bad.util.GuestAccessMain;
+import com.bad.util.AlarmControlMain;
 
 import javafx.geometry.HPos;
 import javafx.scene.control.Button;
@@ -8,11 +8,11 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
-public class LoginGUI extends GUI {
+public class AlarmLoginGUI extends GUI {
 	private TextField txtUsername = new TextField();
 	private PasswordField pfPass = new PasswordField();
 	
-	public LoginGUI() {
+	public AlarmLoginGUI() {
 		super("Login");
 		Button btnLogin = new Button("Login");
 		
@@ -31,8 +31,8 @@ public class LoginGUI extends GUI {
 	}
 	
 	private void login() {
-		if(GuestAccessMain.login(txtUsername.getText().toLowerCase(), pfPass.getText())) {
-			GuestAccessMain.setScene("home");
+		if(AlarmControlMain.login(txtUsername.getText().toLowerCase(), pfPass.getText())) {
+			AlarmControlMain.setScene("alarmPanel");
 		} else {
 			lblError.setText("Incorrect username or password.");
 		}

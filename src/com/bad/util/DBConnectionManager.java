@@ -20,7 +20,7 @@ public class DBConnectionManager {
 	private static final String dbPassword = "Fu5o32ta8A75xaN1T32I162E1I2iC8";
 	private Connection conn;
 
-	private PreparedStatement psUserInfo, psGetAccessRulesUser, psGetAccessRule, psMakeRule, psEditRule;
+	private PreparedStatement psUserInfo, psGetAccessRulesUser, psGetAccessRule, psMakeRule, psEditRule, psDeleteRule;
 
 	private DBConnectionManager() throws ClassNotFoundException, SQLException {
 		DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -35,20 +35,6 @@ public class DBConnectionManager {
 		}
 	}
 
-	public String getIp() {
-		String ret = null;
-
-		try {
-			String url;
-			url = conn.getMetaData().getURL();
-			ret = url.substring(url.indexOf("//") + 2, url.indexOf("/e"));
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return ret;
-	}
-
 	// Create all the PreparedStatements
 	private void makePS() {
 		try {
@@ -57,6 +43,7 @@ public class DBConnectionManager {
 			psGetAccessRule = conn.prepareStatement("SELECT * FROM accessRules WHERE id = ?;");
 			psMakeRule = conn.prepareStatement("INSERT INTO accessRules (homeOwner, guest, guestNumber, pin, startTime, endTime) VALUES (?, ?, ?, ?, ?, ?);", Statement.RETURN_GENERATED_KEYS);
 			psEditRule = conn.prepareStatement("UPDATE accessRules SET homeOwner = ?, guest = ?, guestNumber = ?, pin = ?, startTime = ?, endTime = ? WHERE id = ?;");
+			psDeleteRule = conn.prepareStatement("DELETE FROM accessRules WHERE id = ?;");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -182,5 +169,15 @@ public class DBConnectionManager {
 			e.printStackTrace();
 		}
 		return ret;
+	}
+
+	public void deleteRule(AccessRule rule) {
+		try {
+			psDeleteRule.setInt(1, rule.getId());
+			
+			psDeleteRule.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

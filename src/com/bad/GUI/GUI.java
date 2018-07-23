@@ -3,7 +3,7 @@ package com.bad.GUI;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import com.bad.util.Main;
+import com.bad.util.GuestAccessMain;
 
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -38,7 +38,7 @@ public class GUI {
     	vb.setAlignment(Pos.TOP_CENTER);
     	try {
     		ImageView im = new ImageView(new Image(new FileInputStream("C:\\Users\\Nick\\Documents\\Workspace\\GuestAccess\\res\\myPlaceLogo.PNG")));
-			im.setFitWidth(Main.getWidth() * .5);
+			im.setFitWidth(GuestAccessMain.getWidth() * .5);
 			im.setPreserveRatio(true);
     		vb.getChildren().addAll(im, gpRoot, lblError);
 		} catch (FileNotFoundException e) {
